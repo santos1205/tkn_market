@@ -28,10 +28,14 @@ contract NFTMarketplace is ReentrancyGuard {
 
     function buyNFT(address nftAddress, uint256 tokenId) external payable nonReentrant {
         Listing memory listing = listings[nftAddress][tokenId];
-        require(msg.value == listing.price, "Incorrect price");
+        
+        require(listing.price > 0, "NFT not listed for sale"); // Ensure NFT is listed
+        require(msg.value == listing.price, "Incorrect price"); // Ensure correct payment amount
+        require(msg.sender != listing.seller, "Seller cannot buy their own NFT"); // Prevent self-purchase
 
-        delete listings[nftAddress][tokenId];
+        delete listings[nftAddress][tokenId]; // Remove the listing
 
+        // Transfer NFT to buyer and funds to seller
         IERC721(nftAddress).safeTransferFrom(listing.seller, msg.sender, tokenId);
         payable(listing.seller).transfer(msg.value);
 
