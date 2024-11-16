@@ -1,24 +1,53 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.18;
+// Compatible with OpenZeppelin Contracts ^5.0.0
+pragma solidity ^0.8.27;
 
+// contract address: 0xd224422Eb1eBbFcBAeaBEfD3d9f5b429A0782b12
+
+import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract MyNFT is ERC721URIStorage, Ownable {
-    uint256 public nextTokenId;
+contract NFTFactory is ERC721, ERC721URIStorage, Ownable {
+    uint256 public tokenId;
     uint256 public maxSupply;
+    string public contractURI;
 
-    constructor(string memory name, string memory symbol, uint256 _maxSupply) ERC721(name, symbol) {
-        maxSupply = _maxSupply;
+    event TokenMintedTo(address to, uint tokenId);
+
+    constructor(string memory name,
+        string memory symbol,
+        string memory _contractURI
+    ) ERC721(name, symbol) Ownable(msg.sender)
+    {
+        maxSupply = 100;
+        contractURI = _contractURI;
     }
 
-    function mintNFT(address recipient, string memory tokenURI) external onlyOwner {
-        require(nextTokenId < maxSupply, "Max supply reached");
-        
-        uint256 tokenId = nextTokenId;
-        
-        _safeMint(recipient, tokenId);         // Mint the NFT to the recipient
-        _setTokenURI(tokenId, tokenURI);       // Set the token-specific URI
-        nextTokenId++;
+    function safeMint(address to, string memory _tokenURI) public onlyOwner {
+        require(tokenId < maxSupply, "MAX TOKEN LIMIT REACHED");
+        uint256 _tokenId = tokenId++;
+        _safeMint(to, _tokenId);
+        _setTokenURI(tokenId, _tokenURI);
+        emit TokenMintedTo(to, tokenId);
+    }
+
+    function tokenURI(uint256 _tokenId)
+        public
+        view
+        override(ERC721, ERC721URIStorage)
+        returns (string memory)
+    {
+        return super.tokenURI(_tokenId);
+    }
+
+    // Função requerida como sobreescrita
+    function supportsInterface(bytes4 interfaceId)
+        public
+        view
+        override(ERC721, ERC721URIStorage)
+        returns (bool)
+    {
+        return super.supportsInterface(interfaceId);
     }
 }
