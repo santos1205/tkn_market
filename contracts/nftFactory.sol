@@ -15,39 +15,33 @@ contract NFTFactory is ERC721, ERC721URIStorage, Ownable {
 
     event TokenMintedTo(address to, uint tokenId);
 
-    constructor(string memory name,
+    constructor(
+        string memory name,
         string memory symbol,
         string memory _contractURI
-    ) ERC721(name, symbol) Ownable(msg.sender)
-    {
+    ) ERC721(name, symbol) Ownable(msg.sender) {
         maxSupply = 100;
         contractURI = _contractURI;
     }
 
-    function safeMint(address to, string memory _tokenURI) public onlyOwner {
+    function mintToMarketplace(address marketplaceAddress, string memory _tokenURI) public onlyOwner {
         require(tokenId < maxSupply, "MAX TOKEN LIMIT REACHED");
         uint256 _tokenId = tokenId++;
-        _safeMint(to, _tokenId);
+        _safeMint(marketplaceAddress, _tokenId);
         _setTokenURI(tokenId, _tokenURI);
-        emit TokenMintedTo(to, tokenId);
+        emit TokenMintedTo(marketplaceAddress, tokenId);
     }
 
-    function tokenURI(uint256 _tokenId)
-        public
-        view
-        override(ERC721, ERC721URIStorage)
-        returns (string memory)
-    {
+    function tokenURI(
+        uint256 _tokenId
+    ) public view override(ERC721, ERC721URIStorage) returns (string memory) {
         return super.tokenURI(_tokenId);
     }
 
     // Função requerida como sobreescrita
-    function supportsInterface(bytes4 interfaceId)
-        public
-        view
-        override(ERC721, ERC721URIStorage)
-        returns (bool)
-    {
+    function supportsInterface(
+        bytes4 interfaceId
+    ) public view override(ERC721, ERC721URIStorage) returns (bool) {
         return super.supportsInterface(interfaceId);
     }
 }
