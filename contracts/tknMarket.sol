@@ -3,11 +3,15 @@ pragma solidity ^0.8.27;
 
 // contract address: 0x857BE7553d197509Ae6a6934D773663fADBCcACF
 
+// ONDE PAREI: TESTAR CONTRATO NO REMIX
+
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol"; // Import IERC721Receiver
 
-contract TKNMarket is ReentrancyGuard, Ownable {
+
+contract TKNMarket is ReentrancyGuard, Ownable, IERC721Receiver {
     struct Listing {
         uint256 price;
         bool isListed;
@@ -63,6 +67,15 @@ contract TKNMarket is ReentrancyGuard, Ownable {
         require(balance > 0, "No funds to withdraw");
 
         payable(owner()).transfer(balance);
+    }
+
+    function onERC721Received(
+        address,
+        address,
+        uint256,
+        bytes calldata
+    ) external override pure returns (bytes4) {
+        return this.onERC721Received.selector;
     }
 
     /**
