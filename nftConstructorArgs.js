@@ -1,5 +1,5 @@
 module.exports = [
-  "Jack - O Lenhador", // _symbol
-  "LNH1", // _owner
-  "https://green-obedient-minnow-170.mypinata.cloud/ipfs/Qme4sTAGpUS2jYN7kNuckkckS451GVt1nVZMyBUtj5bJjo", // _name
+  "TKN Collection",
+  "TKC",
+  "https://green-obedient-minnow-170.mypinata.cloud/ipfs/QmY4gDgSt3SvwnrZX8USvK4FmprbW1Se48ZJaJT4NdUkch", // _name
 ];

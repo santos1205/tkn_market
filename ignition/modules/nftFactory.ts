@@ -7,9 +7,9 @@ import { buildModule } from "@nomicfoundation/hardhat-ignition/modules";
 // const ONE_GWEI: bigint = 1_000_000_000n;
 
 const CONTRACT_URI =
-  "https://green-obedient-minnow-170.mypinata.cloud/ipfs/Qme4sTAGpUS2jYN7kNuckkckS451GVt1nVZMyBUtj5bJjo";
-const TOKEN_NAME = "Jack - O Lenhador";
-const TOKEN_SYMBOL = "LNH1";
+  "https://green-obedient-minnow-170.mypinata.cloud/ipfs/QmY4gDgSt3SvwnrZX8USvK4FmprbW1Se48ZJaJT4NdUkch";
+const TOKEN_NAME = "TKN Collection";
+const TOKEN_SYMBOL = "TKC";
 
 const NFTFactoryModule = buildModule("NFTFactoryModule", (m) => {
   const tokenName = m.getParameter("tokenName", TOKEN_NAME);
