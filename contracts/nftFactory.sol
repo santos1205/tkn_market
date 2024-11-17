@@ -2,7 +2,7 @@
 // Compatible with OpenZeppelin Contracts ^5.0.0
 pragma solidity ^0.8.27;
 
-// contract address: 0xfd69CD8F5921f0C699B3Ac0C54ed5534835b091E
+// contract address: 0xCc2cd7488d8EA2bB37AA53Fb633cf91d9DFcC582
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
@@ -39,7 +39,7 @@ contract NFTFactory is ERC721, ERC721URIStorage, Ownable {
     }
 
     // Expondo maxSupply
-    function getMaxSupply() public view returns (uint256) {
+    function totalSupply() public view returns (uint256) {
         return maxSupply;
     }
 
