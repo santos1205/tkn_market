@@ -38,7 +38,12 @@ contract NFTFactory is ERC721, ERC721URIStorage, Ownable {
         return super.tokenURI(_tokenId);
     }
 
-    // Função requerida como sobreescrita
+    // Expondo maxSupply
+    function getMaxSupply() public view returns (uint256) {
+        return maxSupply;
+    }
+
+    // Função requerida como sobreescrita por ERC721URIStorage
     function supportsInterface(
         bytes4 interfaceId
     ) public view override(ERC721, ERC721URIStorage) returns (bool) {

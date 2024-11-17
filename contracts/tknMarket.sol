@@ -1,9 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.27;
 
-// contract address: 0x857BE7553d197509Ae6a6934D773663fADBCcACF
-
-// ONDE PAREI: TESTAR CONTRATO NO REMIX
+// contract address: 0xEC2d12Fc1C9276428de8eE0811Eed68BB937626B
 
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
