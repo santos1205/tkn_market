@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.27;
 
-// contract address: 0xEC2d12Fc1C9276428de8eE0811Eed68BB937626B
+// contract address: 0xb1F2D1B02439fa0bc0Ef300679f398426a524f54
 
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
@@ -10,12 +10,12 @@ import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol"; // Import IER
 
 
 contract TKNMarket is ReentrancyGuard, Ownable, IERC721Receiver {
-    struct Listing {
+    struct NFTDetails {
         uint256 price;
         bool isListed;
     }
 
-    mapping(address => mapping(uint256 => Listing)) public listings;
+    mapping(address => mapping(uint256 => NFTDetails)) public nftDetails;
 
     event TokenAdded(address indexed nftAddress, uint256 indexed tokenId, uint256 price);
     event Bought(address indexed nftAddress, uint256 indexed tokenId, address buyer, uint256 price);
@@ -34,7 +34,7 @@ contract TKNMarket is ReentrancyGuard, Ownable, IERC721Receiver {
         IERC721 nft = IERC721(nftAddress);
         require(nft.ownerOf(tokenId) == address(this), "Marketplace does not own this NFT");
 
-        listings[nftAddress][tokenId] = Listing(price, true);
+        nftDetails[nftAddress][tokenId] = NFTDetails(price, true);
         emit TokenAdded(nftAddress, tokenId, price);
     }
 
@@ -44,7 +44,7 @@ contract TKNMarket is ReentrancyGuard, Ownable, IERC721Receiver {
      * @param tokenId ID of the NFT to buy.
      */
     function buyNFT(address nftAddress, uint256 tokenId) external payable nonReentrant {
-        Listing storage listing = listings[nftAddress][tokenId];
+        NFTDetails storage listing = nftDetails[nftAddress][tokenId];
         require(listing.isListed, "NFT not listed for sale");
         require(msg.value == listing.price, "Incorrect price");
 
@@ -74,6 +74,11 @@ contract TKNMarket is ReentrancyGuard, Ownable, IERC721Receiver {
         bytes calldata
     ) external override pure returns (bytes4) {
         return this.onERC721Received.selector;
+    }
+
+    function getNFTDetails(address nftAddress, uint256 tokenId) external view returns (uint256 valor, bool isListed) {
+        NFTDetails memory nftDetail = nftDetails[nftAddress][tokenId];
+        return (nftDetail.price, nftDetail.isListed);
     }
 
     /**
