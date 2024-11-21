@@ -37,8 +37,8 @@ contract TKNMarket is ReentrancyGuard, Ownable, IERC721Receiver {
 
     function mintNFT(string memory _tokenURI, uint256 _valor) external {
         // Minta NFT para o próprio contrato
-        uint256 currentTokenId = nftContract.tokenId();
         nftContract.mintNFT(address(this), _tokenURI);
+        uint256 currentTokenId = nftContract.tokenId();
         // add nft na lista do marketplace
         NFT memory itemNft = NFT(address(nftContract), currentTokenId);
         listedNFTs.push(itemNft);

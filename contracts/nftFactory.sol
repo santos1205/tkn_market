@@ -26,8 +26,8 @@ contract NFTFactory is ERC721, ERC721URIStorage, Ownable {
 
     function mintNFT(address toAddress, string memory _tokenURI) public onlyOwner {
         require(tokenId < maxSupply, "MAX TOKEN LIMIT REACHED");
-        uint256 _tokenId = tokenId++;
-        _safeMint(toAddress, _tokenId);
+        tokenId = ++tokenId;
+        _safeMint(toAddress, tokenId);
         _setTokenURI(tokenId, _tokenURI);
         emit TokenMintedTo(toAddress, tokenId);
     }
