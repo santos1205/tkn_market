@@ -2,7 +2,7 @@
 // Compatible with OpenZeppelin Contracts ^5.0.0
 pragma solidity ^0.8.27;
 
-// contract address: 0xCc2cd7488d8EA2bB37AA53Fb633cf91d9DFcC582
+// contract address: 0x14842AEddf8F89228Ba57288D1f197Db2C96a534
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
@@ -24,12 +24,12 @@ contract NFTFactory is ERC721, ERC721URIStorage, Ownable {
         contractURI = _contractURI;
     }
 
-    function mintToMarketplace(address marketplaceAddress, string memory _tokenURI) public onlyOwner {
+    function mintNFT(address toAddress, string memory _tokenURI) public onlyOwner {
         require(tokenId < maxSupply, "MAX TOKEN LIMIT REACHED");
         uint256 _tokenId = tokenId++;
-        _safeMint(marketplaceAddress, _tokenId);
+        _safeMint(toAddress, _tokenId);
         _setTokenURI(tokenId, _tokenURI);
-        emit TokenMintedTo(marketplaceAddress, tokenId);
+        emit TokenMintedTo(toAddress, tokenId);
     }
 
     function tokenURI(
