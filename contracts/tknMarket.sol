@@ -4,6 +4,7 @@ pragma solidity ^0.8.27;
 // contract address: 0x84d3fc84Fca8d3Ad60E6b78d5dC4564204f5368A
 
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol";
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol"; // Import IERC721Receiver
@@ -84,23 +85,26 @@ contract TKNMarket is ReentrancyGuard, Ownable, IERC721Receiver {
     }
 
     // Get all listed NFTs
-    function getAllContractNFTs() external view returns (address[] memory, uint256[] memory, uint256[] memory) {
+    function getAllContractNFTs() external view 
+    returns (address[] memory, uint256[] memory, uint256[] memory, string[] memory) {
         uint256 count = listedNFTs.length;
 
         // Initialize arrays
         address[] memory nftAddresses = new address[](count);
+        string[] memory tokenURIs = new string[](count);
         uint256[] memory tokenIds = new uint256[](count);
         uint256[] memory prices = new uint256[](count);
 
         // Populate arrays with listed NFTs
         for (uint256 i = 0; i < count; i++) {
-            NFT memory nftItem = listedNFTs[i];
+            NFT memory nftItem = listedNFTs[i];            
             nftAddresses[i] = nftItem.nftAddress;
+            tokenURIs[i] = IERC721Metadata(nftItem.nftAddress).tokenURI(nftItem.tokenId);
             tokenIds[i] = nftItem.tokenId;
             prices[i] = nftMappingList[nftItem.nftAddress][nftItem.tokenId].price;
         }
 
-        return (nftAddresses, tokenIds, prices);
+        return (nftAddresses, tokenIds, prices, tokenURIs);
     }
 
     function getNFTDetails(address nftAddress, uint256 tokenId) external view returns (uint256 valor, bool isListed) {
