@@ -1,0 +1,12 @@
+{
+  "name": "Classic Car NFT",
+  "description": "A great rare classic car.",
+  "image": "https://green-obedient-minnow-170.mypinata.cloud/ipfs/QmawDcS64zJmQCpy8LJ1xpNYP5wGqPxizzeNkviKSDQyEF/Classic-cars.png",
+  "attributes": [
+    { "trait_type": "Make", "value": "Ford" },
+    { "trait_type": "Model", "value": "Model X" },
+    { "trait_type": "Year", "value": "2022" },
+    { "trait_type": "Range", "value": "348 miles" },
+    { "trait_type": "Price", "value": "120000" }
+  ]
+}

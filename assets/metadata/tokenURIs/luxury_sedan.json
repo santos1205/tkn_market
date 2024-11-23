@@ -1,0 +1,12 @@
+{
+  "name": "Luxury Sedan NFT",
+  "description": "A premium luxury sedan for ultimate comfort.",
+  "image": "https://green-obedient-minnow-170.mypinata.cloud/ipfs/QmawDcS64zJmQCpy8LJ1xpNYP5wGqPxizzeNkviKSDQyEF/luxury-sedan.jpg",
+  "attributes": [
+    { "trait_type": "Make", "value": "Mercedes-Benz" },
+    { "trait_type": "Model", "value": "S-Class" },
+    { "trait_type": "Year", "value": "2023" },
+    { "trait_type": "Interior", "value": "Leather" },
+    { "trait_type": "Price", "value": "110000" }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "name": "Sports Car NFT",
+  "description": "A sleek red sports car with top-notch performance.",
+  "image": "https://green-obedient-minnow-170.mypinata.cloud/ipfs/QmawDcS64zJmQCpy8LJ1xpNYP5wGqPxizzeNkviKSDQyEF/sport_car.png",
+  "attributes": [
+    { "trait_type": "Make", "value": "Ferrari" },
+    { "trait_type": "Model", "value": "488 Spider" },
+    { "trait_type": "Year", "value": "2023" },
+    { "trait_type": "Top Speed", "value": "211 mph" },
+    { "trait_type": "Price", "value": "250000" }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "name": "Electric SUV NFT",
+  "description": "Luxurious electric SUV with cutting-edge technology.",
+  "image": "https://green-obedient-minnow-170.mypinata.cloud/ipfs/QmawDcS64zJmQCpy8LJ1xpNYP5wGqPxizzeNkviKSDQyEF/eletric-suv.png",
+  "attributes": [
+    { "trait_type": "Make", "value": "Tesla" },
+    { "trait_type": "Model", "value": "Model X" },
+    { "trait_type": "Year", "value": "2022" },
+    { "trait_type": "Range", "value": "348 miles" },
+    { "trait_type": "Price", "value": "120000" }
+  ]
+}
