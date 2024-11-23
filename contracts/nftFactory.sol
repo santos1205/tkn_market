@@ -1,24 +1,52 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.18;
+// Compatible with OpenZeppelin Contracts ^5.0.0
+pragma solidity ^0.8.27;
 
+// contract address: 0x40980B5f4F7609fCD5A00426B6f7716CF5395A84
+
+import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract MyNFT is ERC721URIStorage, Ownable {
-    uint256 public nextTokenId;
+contract NFTFactory is ERC721, ERC721URIStorage, Ownable {
+    uint256 public tokenId;
     uint256 public maxSupply;
+    string public contractURI;
 
-    constructor(string memory name, string memory symbol, uint256 _maxSupply) ERC721(name, symbol) {
-        maxSupply = _maxSupply;
+    event TokenMintedTo(address to, uint tokenId);
+
+    constructor(
+        string memory name,
+        string memory symbol,
+        string memory _contractURI
+    ) ERC721(name, symbol) Ownable(msg.sender) {
+        maxSupply = 100;
+        contractURI = _contractURI;
     }
 
-    function mintNFT(address recipient, string memory tokenURI) external onlyOwner {
-        require(nextTokenId < maxSupply, "Max supply reached");
-        
-        uint256 tokenId = nextTokenId;
-        
-        _safeMint(recipient, tokenId);         // Mint the NFT to the recipient
-        _setTokenURI(tokenId, tokenURI);       // Set the token-specific URI
-        nextTokenId++;
+    function mintNFT(address toAddress, string memory _tokenURI) public onlyOwner {
+        require(tokenId < maxSupply, "MAX TOKEN LIMIT REACHED");
+        tokenId = ++tokenId;
+        _safeMint(toAddress, tokenId);
+        _setTokenURI(tokenId, _tokenURI);
+        emit TokenMintedTo(toAddress, tokenId);
+    }
+
+    function tokenURI(
+        uint256 _tokenId
+    ) public view override(ERC721, ERC721URIStorage) returns (string memory) {
+        return super.tokenURI(_tokenId);
+    }
+
+    // Expondo maxSupply
+    function totalSupply() public view returns (uint256) {
+        return maxSupply;
+    }
+
+    // Função requerida como sobreescrita por ERC721URIStorage
+    function supportsInterface(
+        bytes4 interfaceId
+    ) public view override(ERC721, ERC721URIStorage) returns (bool) {
+        return super.supportsInterface(interfaceId);
     }
 }
