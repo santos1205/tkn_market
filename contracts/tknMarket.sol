@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.27;
 
-// contract address: 0xE9436E39D744eBc67261B34210140ac86381C430
+// contract address: 0x6a095F22B6d23583207CBbBcAF707F7D82154DA0
 
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol";
@@ -45,7 +45,6 @@ contract TKNMarket is ReentrancyGuard, Ownable, IERC721Receiver {
         listedNFTs.push(itemNft);
         nftMappingList[address(nftContract)][currentTokenId] = NFTDetails(_valor, true);
     }
-
     
     function buyNFT(address nftAddress, uint256 tokenId) external payable nonReentrant {
         NFTDetails storage nftAVenda = nftMappingList[nftAddress][tokenId];
@@ -71,16 +70,6 @@ contract TKNMarket is ReentrancyGuard, Ownable, IERC721Receiver {
         payable(owner()).transfer(balance);
     }
 
-    function onERC721Received(
-        address,
-        address,
-        uint256,
-        bytes calldata
-    ) external override pure returns (bytes4) {
-        return this.onERC721Received.selector;
-    }
-
-    // Get all listed NFTs
     function getAllContractNFTs() external view 
     returns (address[] memory, uint256[] memory, uint256[] memory, string[] memory) {
         uint256 count = listedNFTs.length;
@@ -108,17 +97,16 @@ contract TKNMarket is ReentrancyGuard, Ownable, IERC721Receiver {
         return (nftDetail.valor, nftDetail.isListed);
     }
 
-    /**
-     * @dev Withdraw any unlisted NFTs back to the owner.
-     * @param nftAddress Address of the NFT contract.
-     * @param tokenId ID of the NFT to withdraw.
-     */
-    // ### FOR FUTURE IMPLEMENTATIONS
-    // function withdrawNFT(address nftAddress, uint256 tokenId) external onlyOwner nonReentrant {
-    //     IERC721 nft = IERC721(nftAddress);
-    //     require(nft.ownerOf(tokenId) == address(this), "Marketplace does not own this NFT");
-    //     require(!listings[nftAddress][tokenId].isListed, "Cannot withdraw a listed NFT");
+    function updateTokenURI(uint256 tokenId, string memory newURI) external {
+        nftContract.updateTokenURI(tokenId, newURI);        
+    }
 
-    //     nft.safeTransferFrom(address(this), msg.sender, tokenId);
-    // }
+    function onERC721Received(
+        address,
+        address,
+        uint256,
+        bytes calldata
+    ) external override pure returns (bytes4) {
+        return this.onERC721Received.selector;
+    }
 }

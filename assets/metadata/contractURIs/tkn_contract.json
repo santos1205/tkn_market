@@ -1,0 +1,8 @@
+{
+  "name": "TKN Market",
+  "description": "Collection of cars for sale.",
+  "image": "https://green-obedient-minnow-170.mypinata.cloud/ipfs/QmRq3xFoUV9uhSGVDiMPv1zxTC8yi9T1fLXiAsXtZhHgTz",
+  "external_link": "https://my-nft-website.com",
+  "seller_fee_basis_points": 500,
+  "fee_recipient": "0x3eC80f490112ef4661c9b1E6E360ae19306201bB"
+}
