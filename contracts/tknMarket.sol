@@ -12,7 +12,7 @@ import "./nftFactory.sol";
 
 contract TKNMarket is ReentrancyGuard, Ownable, IERC721Receiver {
     struct NFTDetails {
-        uint256 price;
+        uint256 valor;
         bool isListed;
     }
     struct NFT {
@@ -46,15 +46,11 @@ contract TKNMarket is ReentrancyGuard, Ownable, IERC721Receiver {
         nftMappingList[address(nftContract)][currentTokenId] = NFTDetails(_valor, true);
     }
 
-    /**
-     * @dev Buy an NFT from the marketplace.
-     * @param nftAddress Address of the NFT contract.
-     * @param tokenId ID of the NFT to buy.
-     */
+    
     function buyNFT(address nftAddress, uint256 tokenId) external payable nonReentrant {
-        NFTDetails storage listing = nftMappingList[nftAddress][tokenId];
-        require(listing.isListed, "NFT not listed for sale");
-        require(msg.value == listing.price, "Incorrect price");
+        NFTDetails storage nftAVenda = nftMappingList[nftAddress][tokenId];
+        require(nftAVenda.isListed, "NFT not listed for sale");
+        require(msg.value == nftAVenda.valor, "Incorrect price");
 
         // Transfer payment to contract owner
         payable(owner()).transfer(msg.value);
@@ -63,9 +59,9 @@ contract TKNMarket is ReentrancyGuard, Ownable, IERC721Receiver {
         IERC721(nftAddress).safeTransferFrom(address(this), msg.sender, tokenId);
 
         // Mark NFT as no longer listed
-        listing.isListed = false;
+        nftAVenda.isListed = false;
 
-        emit Bought(nftAddress, tokenId, msg.sender, listing.price);
+        emit Bought(nftAddress, tokenId, msg.sender, nftAVenda.valor);
     }
 
     function withdrawFunds() external onlyOwner nonReentrant {
@@ -101,7 +97,7 @@ contract TKNMarket is ReentrancyGuard, Ownable, IERC721Receiver {
             nftAddresses[i] = nftItem.nftAddress;
             tokenURIs[i] = IERC721Metadata(nftItem.nftAddress).tokenURI(nftItem.tokenId);
             tokenIds[i] = nftItem.tokenId;
-            prices[i] = nftMappingList[nftItem.nftAddress][nftItem.tokenId].price;
+            prices[i] = nftMappingList[nftItem.nftAddress][nftItem.tokenId].valor;
         }
 
         return (nftAddresses, tokenIds, prices, tokenURIs);
@@ -109,7 +105,7 @@ contract TKNMarket is ReentrancyGuard, Ownable, IERC721Receiver {
 
     function getNFTDetails(address nftAddress, uint256 tokenId) external view returns (uint256 valor, bool isListed) {
         NFTDetails memory nftDetail = nftMappingList[nftAddress][tokenId];
-        return (nftDetail.price, nftDetail.isListed);
+        return (nftDetail.valor, nftDetail.isListed);
     }
 
     /**
