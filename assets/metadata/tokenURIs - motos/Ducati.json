@@ -1,0 +1,12 @@
+{
+  "name": "Ducati Panigale V4 NFT",
+  "description": "An Italian masterpiece with unmatched performance and style.",
+  "image": "https://green-obedient-minnow-170.mypinata.cloud/ipfs/QmdddXLaeZ9dfFkt7BmxNmQ3Akb6kM2SmQVruEju2Yma6P/Panigale-V4.png",
+  "attributes": [
+    { "trait_type": "Make", "value": "Ducati" },
+    { "trait_type": "Model", "value": "Panigale V4" },
+    { "trait_type": "Year", "value": "2023" },
+    { "trait_type": "Engine", "value": "1,103 cc Desmosedici Stradale" },
+    { "trait_type": "Price", "value": "24" }
+  ]
+}

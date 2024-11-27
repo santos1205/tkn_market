@@ -1,0 +1,12 @@
+{
+  "name": "Harley-Davidson Road King NFT",
+  "description": "A legendary touring motorcycle with timeless style.",
+  "image": "https://green-obedient-minnow-170.mypinata.cloud/ipfs/QmdddXLaeZ9dfFkt7BmxNmQ3Akb6kM2SmQVruEju2Yma6P/road-king-special.jpg",
+  "attributes": [
+    { "trait_type": "Make", "value": "Harley-Davidson" },
+    { "trait_type": "Model", "value": "Road King" },
+    { "trait_type": "Year", "value": "2023" },
+    { "trait_type": "Engine", "value": "Milwaukee-Eight 107" },
+    { "trait_type": "Price", "value": "19" }
+  ]
+}
